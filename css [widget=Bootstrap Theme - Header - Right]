@@ -1,0 +1,9 @@
+body input.tt-hint,body input.member_search.form-control.normal-autosuggest-input.tt-query {
+   background-color: white !important;
+}
+.input-group-sm .input-group-addon .fa {
+    font-size: 15px;
+}
+.listingSearchbox {
+    text-align: left;
+}

@@ -4,6 +4,17 @@ and replace the following code in that widget with the existing code.
 
 
 <!----------------------------- start of code -------------------------------->
+<?php
+$uri = $_SERVER['REQUEST_URI'];
+//echo $uri; // Outputs: URI 
+
+$protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"; 
+$url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+//echo $url; // Outputs: Full URL 
+
+$query = $_SERVER['QUERY_STRING'];
+//echo $query; // Outputs: Query String
+?>
 <?php 
 //this function is added by zain to check if the device is mobile or not.
 function isMobile() {
@@ -100,13 +111,20 @@ foreach ($_GET as $gkey => $gvalue) {
                 $autoSuggestName = 'global';
             }
             ?>
-	<?php if(isMobile()){?>
+	<?php if(isMobile() && !strpos($url, 'search_results')){?>
 	<!-- widget showing search box according to the post page -->
 	[widget=Bootstrap Theme - Search Module - Dynamic Sidebar Search]
 	<!-- widget showing search box according to the post page -->
 	
 	<!--this if is to hide the deafult keyword search box from header -->
-	<?php } $ik=0; if(!isMobile()){?>
+	<?php }
+			else if(isMobile() && strpos($url, 'search_results')){ ?>
+	<div class="listingSearchbox" >
+		[widget=Bootstrap Theme - Search Module - Top_Sub_Location]
+	</div>
+		<?php	}
+			
+			$ik=0; if(!isMobile()){?>
             <form action="/<?php echo $featurename; ?>" name="frm1" class="form-inline website-search">
                 <?php
                 if ($wa['custom_159'] == 3 || $wa['custom_159'] == 2 || $wa['custom_159'] == 5 || $wa['custom_159'] == 6 || $wa['custom_159'] == 7 || $wa['custom_159'] == 8 || $wa['custom_159'] == 9 || $wa['custom_159'] == 10 || $wa['custom_159'] == 11 || $wa['custom_159'] == 12 || $wa['custom_159'] == 13 || $wa['custom_159'] == 15 || $wa['custom_159'] == 16|| $wa['custom_159'] == 17) { ?>
@@ -151,5 +169,4 @@ foreach ($_GET as $gkey => $gvalue) {
         }
     } ?>
 </div>
-
 <!----------------------------- end of code -------------------------------->

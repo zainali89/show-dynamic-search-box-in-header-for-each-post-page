@@ -17,14 +17,10 @@ $query = $_SERVER['QUERY_STRING'];
 ?>
 <?php 
 //this function is added by zain to check if the device is mobile or not.
+//-- Very simple way
 function isMobile() {
-    if(!empty($_SERVER['HTTP_USER_AGENT'])){
-       $user_ag = $_SERVER['HTTP_USER_AGENT'];
-       if(preg_match('/(Mobile|Android|Tablet|GoBrowser|[0-9]x[0-9]*|uZardWeb\/|Mini|Doris\/|Skyfire\/|iPhone|Fennec\/|Maemo|Iris\/|CLDC\-|Mobi\/)/uis',$user_ag)){
-          return true;
-       };
-    };
-    return false;
+       return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+
 }
 
 ?>
@@ -119,13 +115,16 @@ foreach ($_GET as $gkey => $gvalue) {
             ?>
 	<?php if(isMobile() && !strpos($url, 'search_results')){?>
 	<!-- widget showing search box according to the post page -->
-	[widget=Bootstrap Theme - Search Module - Dynamic Sidebar Search]
+		<div class="DynamicSearchBoxesForMobileOnly" >
+			[widget=Bootstrap Theme - Search Module - Dynamic Sidebar Search]
+		</div>
+	
 	<!-- widget showing search box according to the post page -->
 	
 	<!--this if is to hide the deafult keyword search box from header -->
 	<?php }
 			else if(isMobile() && strpos($url, 'search_results')){ ?>
-	<div class="listingSearchbox" >
+	<div class="listingSearchbox  class="DynamicSearchBoxesForMobileOnly"" >
 		[widget=Bootstrap Theme - Search Module - Top_Sub_Location]
 	</div>
 		<?php	}
@@ -150,7 +149,7 @@ foreach ($_GET as $gkey => $gvalue) {
                 if ($wa['custom_159'] == 3 || $wa['custom_159'] == 1 || $wa['custom_159'] == 10  || $wa['custom_159'] == 16) { ?>
                     <div class="input-group input-group-sm bmargin">
                         <span class="input-group-addon hidden-md"><i class="fa fa-location-arrow"></i></span>
-                        <input onfocus="this.value=''" list="citiesz" type="text" placeholder="<?= $label['location_search_default'] ?>"
+                        <select onfocus="this.value=''" list="citiesz" type="text" placeholder="<?= $label['location_search_default'] ?>"
                                value="<? if ($_GET['location_value'] != "") {
                                    echo htmlspecialchars($_GET['location_value']);
                                } ?>" id="location_google_maps_header" name="location_value"
@@ -160,6 +159,7 @@ foreach ($_GET as $gkey => $gvalue) {
 						<!-- zain did it to create location dropdown -->
 					
 					[widget=Location Field Dropdown]
+						</select>
 					<!-- end of zain did it to create location dropdown -->
          
 										
